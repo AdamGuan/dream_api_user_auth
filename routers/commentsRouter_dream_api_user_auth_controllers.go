@@ -6,6 +6,27 @@ import (
 
 func init() {
 	
+	beego.GlobalControllerRouter["dream_api_user_auth/controllers:SmsController"] = append(beego.GlobalControllerRouter["dream_api_user_auth/controllers:SmsController"],
+		beego.ControllerComments{
+			"Smsvalid",
+			`/smsvalid/:mobilePhoneNumber`,
+			[]string{"post"},
+			nil})
+
+	beego.GlobalControllerRouter["dream_api_user_auth/controllers:SmsController"] = append(beego.GlobalControllerRouter["dream_api_user_auth/controllers:SmsController"],
+		beego.ControllerComments{
+			"ResetPwdGetSms",
+			`/resetpwd/:mobilePhoneNumber`,
+			[]string{"get"},
+			nil})
+
+	beego.GlobalControllerRouter["dream_api_user_auth/controllers:SmsController"] = append(beego.GlobalControllerRouter["dream_api_user_auth/controllers:SmsController"],
+		beego.ControllerComments{
+			"ChangePhoneSms",
+			`/phone/:mobilePhoneNumber`,
+			[]string{"get"},
+			nil})
+
 	beego.GlobalControllerRouter["dream_api_user_auth/controllers:ConsumerController"] = append(beego.GlobalControllerRouter["dream_api_user_auth/controllers:ConsumerController"],
 		beego.ControllerComments{
 			"CheckUserAndPwdByPhone",
@@ -39,27 +60,6 @@ func init() {
 			"ModifyPhone",
 			`/phone/:mobilePhoneNumber`,
 			[]string{"put"},
-			nil})
-
-	beego.GlobalControllerRouter["dream_api_user_auth/controllers:SmsController"] = append(beego.GlobalControllerRouter["dream_api_user_auth/controllers:SmsController"],
-		beego.ControllerComments{
-			"Smsvalid",
-			`/smsvalid/:mobilePhoneNumber`,
-			[]string{"post"},
-			nil})
-
-	beego.GlobalControllerRouter["dream_api_user_auth/controllers:SmsController"] = append(beego.GlobalControllerRouter["dream_api_user_auth/controllers:SmsController"],
-		beego.ControllerComments{
-			"ResetPwdGetSms",
-			`/resetpwd/:mobilePhoneNumber`,
-			[]string{"get"},
-			nil})
-
-	beego.GlobalControllerRouter["dream_api_user_auth/controllers:SmsController"] = append(beego.GlobalControllerRouter["dream_api_user_auth/controllers:SmsController"],
-		beego.ControllerComments{
-			"ChangePhoneSms",
-			`/phone/:mobilePhoneNumber`,
-			[]string{"get"},
 			nil})
 
 }

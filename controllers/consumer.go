@@ -28,6 +28,9 @@ func (u0 *ConsumerController) jsonEcho(datas map[string]interface{},u *ConsumerC
 	}
 
 	u.Data["json"] = datas
+	//log
+	u.logEcho(datas)
+
 	u.ServeJson()
 }
 
@@ -58,6 +61,8 @@ func (u0 *ConsumerController) checkSign(u *ConsumerController)int {
 // @Failure 401 无权访问
 // @router /auth/:mobilePhoneNumber [get]
 func (u *ConsumerController) CheckUserAndPwdByPhone() {
+	//log
+	u.logRequest()
 	//ini return
 	datas := map[string]interface{}{"responseNo": 0}
 	//model ini
@@ -107,6 +112,8 @@ func (u *ConsumerController) CheckUserAndPwdByPhone() {
 // @Failure 401 无权访问
 // @router /resetpwd [put]
 func (u *ConsumerController) ResetPwdByPhone() {
+	//log
+	u.logRequest()
 	//ini return
 	datas := map[string]interface{}{"responseNo": -1}
 	//model ini
@@ -145,6 +152,8 @@ func (u *ConsumerController) ResetPwdByPhone() {
 // @Failure 401 无权访问
 // @router /pwd/:uid [put]
 func (u *ConsumerController) ModifyPwdByUid() {
+	//log
+	u.logRequest()
 	//ini return
 	datas := map[string]interface{}{"responseNo": -1}
 	//model ini
@@ -181,6 +190,8 @@ func (u *ConsumerController) ModifyPwdByUid() {
 // @Failure 401 无权访问
 // @router /exists/:mobilePhoneNumber [get]
 func (u *ConsumerController) CheckUserExists() {
+	//log
+	u.logRequest()
 	//ini return
 	datas := map[string]interface{}{"responseNo": -1}
 	//model ini
@@ -215,6 +226,8 @@ func (u *ConsumerController) CheckUserExists() {
 // @Failure 401 无权访问
 // @router /phone/:mobilePhoneNumber [put]
 func (u *ConsumerController) ModifyPhone() {
+	//log
+	u.logRequest()
 	//ini return
 	datas := map[string]interface{}{"responseNo": -1}
 	//model ini
@@ -239,4 +252,16 @@ func (u *ConsumerController) ModifyPhone() {
 	}
 	//return
 	u.jsonEcho(datas,u)
+}
+
+//记录请求
+func (u *ConsumerController) logRequest() {
+	var logObj *models.MLog
+	logObj.LogRequest(u.Ctx)
+}
+
+//记录返回
+func (u *ConsumerController) logEcho(datas map[string]interface{}) {
+	var logObj *models.MLog
+	logObj.LogEcho(datas)
 }

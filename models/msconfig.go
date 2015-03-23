@@ -10,6 +10,9 @@ import (
 	"github.com/astaxie/beego/config" 
 )
 
+var Debug bool
+var DebugErrlog bool
+
 //key:响应代码，value:响应信息
 var ConfigMyResponse map[string]string
 
@@ -24,10 +27,14 @@ func init() {
 	orm.DefaultTimeLoc = time.UTC
 	appConf, _ := config.NewConfig("ini", "conf/app.conf")
 	debug,_ := appConf.Bool(beego.RunMode+"::debug")
+	DebugErrlog,_ = appConf.Bool(beego.RunMode+"::errlog")
+	Debug = debug
 	if debug{
 		orm.Debug = true
 	}
-	logFile, _ := os.OpenFile("./db.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0777)
+	otherConf, _ := config.NewConfig("ini", "conf/other.conf")
+	dbLogFile := otherConf.String("dbLogFile")
+	logFile, _ := os.OpenFile(dbLogFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0777)
 	orm.DebugLog = orm.NewLog(logFile)
 
 	getResponseConfig()	

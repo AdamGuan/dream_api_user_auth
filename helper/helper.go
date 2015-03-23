@@ -5,8 +5,8 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
-	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/logs"
+//	"github.com/astaxie/beego"
+//	"github.com/astaxie/beego/logs"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -15,23 +15,12 @@ import (
 	//"net/url"
 	"time"
 	"regexp"
-	"github.com/astaxie/beego/config" 
+//	"github.com/astaxie/beego/config" 
 	"crypto/sha1"
 )
 
-var MyLog *logs.BeeLogger
 
 func init() {
-	//初始化log
-	appConf, _ := config.NewConfig("ini", "conf/app.conf")
-	debug,_ := appConf.Bool(beego.RunMode+"::debug")
-	if debug {
-		MyLog = logs.NewLogger(10000)
-		MyLog.SetLogger("file", `{"filename":"log.log"}`)
-		MyLog.EnableFuncCallDepth(true)
-		//MyLog.Debug("debug test1")
-		// MyLog.Error("error")
-	}
 }
 
 //类型转化 string  to int
@@ -72,7 +61,7 @@ func CreatePwd(num int) string {
 }
 
 //leanCloud curl
-func CurlLeanCloud(requestUri string, method string, requestData map[string]string, appId string, appKey string) map[string]interface{} {
+func CurlLeanCloud(requestUri string, method string, requestData map[string]string, appId string, appKey string) (map[string]interface{},map[string][]string) {
 	geturl := requestUri
 	req, _ := http.NewRequest(method, geturl, nil)
 	data, _ := json.Marshal(requestData)
@@ -94,7 +83,7 @@ func CurlLeanCloud(requestUri string, method string, requestData map[string]stri
 	bodyByte, _ := ioutil.ReadAll(resp.Body)
 	p := map[string]interface{}{}
 	json.Unmarshal(bodyByte, &p)
-	return p
+	return p,resp.Header
 }
 
 //检查签名

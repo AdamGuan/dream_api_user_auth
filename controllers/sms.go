@@ -28,6 +28,9 @@ func (u0 *SmsController) jsonEcho(datas map[string]interface{},u *SmsController)
 	}
 
 	u.Data["json"] = datas
+	//log
+	u.logEcho(datas)
+
 	u.ServeJson()
 }
 
@@ -58,6 +61,8 @@ func (u0 *SmsController) checkSign(u *SmsController)int {
 // @Failure 401 无权访问
 // @router /smsvalid/:mobilePhoneNumber [post]
 func (u *SmsController) Smsvalid() {
+	//log
+	u.logRequest()
 	//ini return
 	datas := map[string]interface{}{"responseNo": -1}
 	//model ini
@@ -97,6 +102,8 @@ func (u *SmsController) Smsvalid() {
 // @Failure 401 无权访问
 // @router /resetpwd/:mobilePhoneNumber [get]
 func (u *SmsController) ResetPwdGetSms() {
+	//log
+	u.logRequest()
 	//ini return
 	datas := map[string]interface{}{"responseNo": -1}
 	//model ini
@@ -146,6 +153,8 @@ func (u *SmsController) ResetPwdGetSms() {
 // @Failure 401 无权访问
 // @router /phone/:mobilePhoneNumber [get]
 func (u *SmsController) ChangePhoneSms() {
+	//log
+	u.logRequest()
 	//ini return
 	datas := map[string]interface{}{"responseNo": -1}
 	//model ini
@@ -183,4 +192,16 @@ func (u *SmsController) ChangePhoneSms() {
 
 	//return
 	u.jsonEcho(datas,u)
+}
+
+//记录请求
+func (u *SmsController) logRequest() {
+	var logObj *models.MLog
+	logObj.LogRequest(u.Ctx)
+}
+
+//记录返回
+func (u *SmsController) logEcho(datas map[string]interface{}) {
+	var logObj *models.MLog
+	logObj.LogEcho(datas)
 }
